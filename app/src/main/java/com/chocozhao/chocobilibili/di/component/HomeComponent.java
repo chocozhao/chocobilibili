@@ -1,13 +1,13 @@
 package com.chocozhao.chocobilibili.di.component;
 
+import com.chocozhao.chocobilibili.di.module.HomeModule;
+import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
+import com.chocozhao.chocobilibili.mvp.ui.fragment.HomeFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import com.chocozhao.chocobilibili.di.module.HomeModule;
-import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
-import com.chocozhao.chocobilibili.mvp.ui.fragment.HomeFragment;
 
 
 /**

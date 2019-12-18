@@ -6,20 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.di.component.AppComponent;
-import com.jess.arms.utils.ArmsUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
 import com.chocozhao.chocobilibili.R;
 import com.chocozhao.chocobilibili.di.component.DaggerMainComponent;
 import com.chocozhao.chocobilibili.mvp.contract.MainContract;
@@ -28,6 +19,14 @@ import com.chocozhao.chocobilibili.mvp.ui.fragment.HomeFragment;
 import com.chocozhao.chocobilibili.mvp.ui.fragment.MessageFragment;
 import com.chocozhao.chocobilibili.mvp.ui.fragment.MoveFragment;
 import com.chocozhao.chocobilibili.mvp.ui.fragment.PartitionFragment;
+import com.jess.arms.base.BaseActivity;
+import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.ArmsUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -46,10 +45,10 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
+
+    private int curFragment = -1;
     private List<Fragment> fragmentList = new ArrayList<>();
 
     @Override
@@ -76,10 +75,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         fragmentList.add(new MessageFragment());
 //      初始化底部导航栏
         initBottomNavigationBar();
-//      初始化ViewPager
-        initViewPager();
-
-
 
     }
 
@@ -97,14 +92,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, mTitles[0])
-                        .setInactiveIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, mTitles[1])
-                        .setInactiveIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, mTitles[2])
-                        .setInactiveIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_launcher, mTitles[3])
-                        .setInactiveIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher)))
+                .addItem(new BottomNavigationItem(R.drawable.tabs_icon_home_press, mTitles[0])
+                        .setInactiveIcon(ContextCompat.getDrawable(this, R.drawable.tabs_icon_home_normal)))
+                .addItem(new BottomNavigationItem(R.drawable.tabs_icon_partition_press, mTitles[1])
+                        .setInactiveIcon(ContextCompat.getDrawable(this, R.drawable.tabs_icon_partition_normal)))
+                .addItem(new BottomNavigationItem(R.drawable.tabs_icon_move_press, mTitles[2])
+                        .setInactiveIcon(ContextCompat.getDrawable(this, R.drawable.tabs_icon_move_normal)))
+                .addItem(new BottomNavigationItem(R.drawable.tabs_icon_person_press, mTitles[3])
+                        .setInactiveIcon(ContextCompat.getDrawable(this, R.drawable.tabs_icon_person_normal)))
                 .setFirstSelectedPosition(0)
                 .initialise();//所有的设置需在调用该方法前完成```
 
@@ -112,7 +107,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {//未选中 -> 选中
-                viewPager.setCurrentItem(position);
+                switchTab(position);
             }
 
             @Override
@@ -129,47 +124,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     /**
-     * 初始化ViewPager
+     * 获取position
+     * @param position
      */
-    private void initViewPager() {
-        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), fragmentList));
-        viewPager.setCurrentItem(0);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+    private void switchTab(int position) {
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("" + position);
+        FragmentTransaction beginTransaction = manager.beginTransaction();
+        if (fragment == null) {
+            if (manager.findFragmentByTag("" + curFragment) != null) {
+                beginTransaction.hide(fragmentList.get(curFragment));
             }
+            beginTransaction.add(R.id.fram_layout, fragmentList.get(position), "" + position)
+                    .show(fragmentList.get(position))
+                    .commit();
 
-            @Override
-            public void onPageSelected(int position) {
-                bottomNavigationBar.selectTab(position);
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        List<Fragment> fragmentList;
-
-        public SectionsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-            super(fm);
-            this.fragmentList = fragments;
+        } else if (curFragment != position) {
+            beginTransaction.hide(fragmentList.get(curFragment))
+                    .show(fragmentList.get(position))
+                    .commit();
         }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
+        curFragment = position;
     }
 
     @Override
@@ -198,4 +174,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void killMyself() {
         finish();
     }
+
+
 }

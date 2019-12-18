@@ -15,6 +15,10 @@
  */
 package com.chocozhao.chocobilibili.mvp.model.api.cache;
 
+import com.chocozhao.chocobilibili.mvp.model.entity.BaseResponse;
+import com.chocozhao.chocobilibili.mvp.model.entity.GetBannerData;
+import com.chocozhao.chocobilibili.mvp.model.entity.User;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +28,6 @@ import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
 import io.rx_cache2.internal.RxCache;
-import com.chocozhao.chocobilibili.mvp.model.entity.User;
 
 /**
  * ================================================
@@ -39,4 +42,11 @@ public interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<BaseResponse<List<GetBannerData>>>> getBanner(Observable<BaseResponse<List<GetBannerData>>> banner);
+
+//    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+//    Observable<GetArticleData> getArticle(Observable<GetArticleData> article, DynamicKey idLastUserQueried);
+
 }
