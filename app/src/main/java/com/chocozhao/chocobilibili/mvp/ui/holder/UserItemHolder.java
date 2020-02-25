@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chocozhao.chocobilibili.R;
+import com.chocozhao.chocobilibili.mvp.model.entity.User;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
@@ -29,8 +31,6 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 
 import butterknife.BindView;
-import com.chocozhao.chocobilibili.R;
-import com.chocozhao.chocobilibili.mvp.model.entity.User;
 
 /**
  * ================================================
@@ -72,6 +72,7 @@ public class UserItemHolder extends BaseHolder<User> {
                         .imageView(mAvatar)
                         .build());
     }
+
 
     /**
      * 在 Activity 的 onDestroy 中使用 {@link DefaultAdapter#releaseAllHolder(RecyclerView)} 方法 (super.onDestroy() 之前)

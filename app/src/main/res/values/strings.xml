@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVPArms</string>
+    <string name="app_name">bilibili</string>
 
     <!--    Bottom navigation bar-->
     <string name="title_home">首页</string>

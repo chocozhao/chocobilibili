@@ -18,6 +18,10 @@ package com.chocozhao.chocobilibili.mvp.model;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 
+import com.chocozhao.chocobilibili.mvp.contract.UserContract;
+import com.chocozhao.chocobilibili.mvp.model.api.cache.CommonCache;
+import com.chocozhao.chocobilibili.mvp.model.api.service.UserService;
+import com.chocozhao.chocobilibili.mvp.model.entity.User;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
@@ -32,10 +36,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictDynamicKey;
-import com.chocozhao.chocobilibili.mvp.contract.UserContract;
-import com.chocozhao.chocobilibili.mvp.model.api.cache.CommonCache;
-import com.chocozhao.chocobilibili.mvp.model.api.service.UserService;
-import com.chocozhao.chocobilibili.mvp.model.entity.User;
+import io.rx_cache2.Reply;
 import timber.log.Timber;
 
 /**
@@ -70,7 +71,12 @@ public class UserModel extends BaseModel implements UserContract.Model {
                                 .getUsers(listObservable
                                         , new DynamicKey(lastIdQueried)
                                         , new EvictDynamicKey(update))
-                                .map(listReply -> listReply.getData());
+                                .map(new Function<Reply<List<User>>, List<User>>() {
+                                    @Override
+                                    public List<User> apply(Reply<List<User>> listReply) throws Exception {
+                                        return listReply.getData();
+                                    }
+                                });
                     }
                 });
 

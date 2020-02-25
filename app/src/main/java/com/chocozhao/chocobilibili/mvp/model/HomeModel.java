@@ -1,16 +1,25 @@
 package com.chocozhao.chocobilibili.mvp.model;
 
 import android.app.Application;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.OnLifecycleEvent;
 
+import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
+import com.chocozhao.chocobilibili.mvp.model.api.service.UserService;
+import com.chocozhao.chocobilibili.mvp.model.entity.BaseResponse;
+import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
+import com.chocozhao.chocobilibili.mvp.model.entity.GetBannerData;
 import com.google.gson.Gson;
+import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 
-import com.jess.arms.di.scope.ActivityScope;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
+import io.reactivex.Observable;
+import timber.log.Timber;
 
 
 /**
@@ -27,6 +36,8 @@ import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
  */
 @ActivityScope
 public class HomeModel extends BaseModel implements HomeContract.Model {
+
+    public static final int USERS_PER_PAGE = 10;
     @Inject
     Gson mGson;
     @Inject
@@ -35,6 +46,29 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     @Inject
     public HomeModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
+    }
+
+    //获取轮播图数据
+    @Override
+    public Observable<BaseResponse<List<GetBannerData>>> getBanner() {
+        return mRepositoryManager
+                .obtainRetrofitService(UserService.class)
+                .getBanner();
+    }
+
+    //获取文章列表
+    @Override
+    public Observable<BaseResponse<GetArticleData>> getArticle(int num, boolean update) {
+        return mRepositoryManager
+                .obtainRetrofitService(UserService.class)
+                .getArticle(num);
+
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    void onPause() {
+        Timber.d("Release Resource");
     }
 
     @Override

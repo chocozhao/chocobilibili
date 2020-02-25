@@ -7,6 +7,11 @@
     android:clipChildren="false"
     android:orientation="vertical">
 
+<!--    <FrameLayout-->
+<!--        android:id="@+id/fram_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"/>-->
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

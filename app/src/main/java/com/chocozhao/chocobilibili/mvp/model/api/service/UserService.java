@@ -15,13 +15,18 @@
  */
 package com.chocozhao.chocobilibili.mvp.model.api.service;
 
+import com.chocozhao.chocobilibili.mvp.model.entity.BaseResponse;
+import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
+import com.chocozhao.chocobilibili.mvp.model.entity.GetBannerData;
+import com.chocozhao.chocobilibili.mvp.model.entity.User;
+
 import java.util.List;
 
 import io.reactivex.Observable;
-import com.chocozhao.chocobilibili.mvp.model.entity.User;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -40,4 +45,11 @@ public interface UserService {
     @Headers({HEADER_API_VERSION})
     @GET("/users")
     Observable<List<User>> getUsers(@Query("since") int lastIdQueried, @Query("per_page") int perPage);
+
+    @GET("/banner/json")
+    Observable<BaseResponse<List<GetBannerData>>> getBanner();
+
+    @GET("article/list/{num}/json")
+    Observable<BaseResponse<GetArticleData>> getArticle(@Path("num") int num);
+
 }

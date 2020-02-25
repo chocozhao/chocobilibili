@@ -15,14 +15,14 @@
  */
 package com.chocozhao.chocobilibili.di.component;
 
+import com.chocozhao.chocobilibili.di.module.UserModule;
+import com.chocozhao.chocobilibili.mvp.contract.UserContract;
+import com.chocozhao.chocobilibili.mvp.ui.activity.UserActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import com.chocozhao.chocobilibili.di.module.UserModule;
-import com.chocozhao.chocobilibili.mvp.contract.UserContract;
-import com.chocozhao.chocobilibili.mvp.ui.activity.UserActivity;
 
 /**
  * ================================================
@@ -38,11 +38,14 @@ import com.chocozhao.chocobilibili.mvp.ui.activity.UserActivity;
 @Component(modules = UserModule.class, dependencies = AppComponent.class)
 public interface UserComponent {
     void inject(UserActivity activity);
+
     @Component.Builder
     interface Builder {
         @BindsInstance
         UserComponent.Builder view(UserContract.View view);
+
         UserComponent.Builder appComponent(AppComponent appComponent);
+
         UserComponent build();
     }
 }

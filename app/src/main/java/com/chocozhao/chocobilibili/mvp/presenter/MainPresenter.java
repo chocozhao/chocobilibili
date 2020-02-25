@@ -2,6 +2,7 @@ package com.chocozhao.chocobilibili.mvp.presenter;
 
 import android.app.Application;
 
+import com.chocozhao.chocobilibili.mvp.contract.MainContract;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
@@ -9,7 +10,6 @@ import com.jess.arms.mvp.BasePresenter;
 
 import javax.inject.Inject;
 
-import com.chocozhao.chocobilibili.mvp.contract.MainContract;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 

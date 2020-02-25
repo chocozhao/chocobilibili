@@ -15,9 +15,9 @@
  */
 package com.chocozhao.chocobilibili.mvp.model.entity;
 
-import java.io.Serializable;
-
 import com.chocozhao.chocobilibili.mvp.model.api.Api;
+
+import java.io.Serializable;
 
 /**
  * ================================================
@@ -31,19 +31,31 @@ import com.chocozhao.chocobilibili.mvp.model.api.Api;
  */
 public class BaseResponse<T> implements Serializable {
     private T data;
-    private String code;
-    private String msg;
+    private int errorCode;
+    private String errorMsg;
 
     public T getData() {
         return data;
     }
 
-    public String getCode() {
-        return code;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public String getMsg() {
-        return msg;
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     /**
@@ -52,7 +64,7 @@ public class BaseResponse<T> implements Serializable {
      * @return
      */
     public boolean isSuccess() {
-        if (code.equals(Api.RequestSuccess)) {
+        if (errorCode == Api.RequestSuccess) {
             return true;
         } else {
             return false;
