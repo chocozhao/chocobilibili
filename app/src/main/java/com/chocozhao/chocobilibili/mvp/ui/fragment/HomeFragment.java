@@ -242,7 +242,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void setBanner(List<GetBannerData> data) {
         //加载广告图片
-        Timber.d("V:mDataList=" + data.get(0).getImagePath());
+//        Timber.d("V:mDataList=" + data.get(0).getImagePath());
 //        mXbanner.loadImage(new XBanner.XBannerAdapter() {
 //            @Override
 //            public void loadBanner(XBanner banner, Object model, View view, int position) {
