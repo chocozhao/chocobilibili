@@ -27,5 +27,5 @@ package com.chocozhao.chocobilibili.mvp.model.api;
 public interface Api {
 //    String APP_DOMAIN = "https://api.github.com";
     String APP_DOMAIN = "https://www.wanandroid.com/";
-    String RequestSuccess = "200";
+    int RequestSuccess = 0;
 }

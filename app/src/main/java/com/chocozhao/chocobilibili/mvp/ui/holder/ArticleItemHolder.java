@@ -25,7 +25,7 @@ import butterknife.BindView;
  * FixDescription：
  **/
 
-public class ArticleItemHolder extends BaseHolder<GetArticleData> {
+public class ArticleItemHolder extends BaseHolder<GetArticleData.DatasBean> {
     @BindView(R.id.article_tv)
     TextView mArticleTv;
     private AppComponent mAppComponent;
@@ -41,8 +41,8 @@ public class ArticleItemHolder extends BaseHolder<GetArticleData> {
     }
 
     @Override
-    public void setData(@NonNull GetArticleData data, int position) {
-        mArticleTv.setText(data.getData().getTotal()+"");
+    public void setData(@NonNull GetArticleData.DatasBean data, int position) {
+        mArticleTv.setText(data.getTitle());
 //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
 //        mImageLoader.loadImage(itemView.getContext(),
 //                ImageConfigImpl

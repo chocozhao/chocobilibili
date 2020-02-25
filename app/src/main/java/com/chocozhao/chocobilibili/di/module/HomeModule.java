@@ -1,7 +1,7 @@
 package com.chocozhao.chocobilibili.di.module;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
@@ -54,18 +54,18 @@ public abstract class HomeModule {
     @ActivityScope
     @Provides
     static RecyclerView.LayoutManager provideLayoutManager(HomeContract.View view) {
-        return new GridLayoutManager(view.getActivity(), 2);
+        return new LinearLayoutManager(view.getActivity());
     }
 
     @ActivityScope
     @Provides
-    static List<GetArticleData> provideArticleList() {
+    static List<GetArticleData.DatasBean> provideArticleList() {
         return new ArrayList<>();
     }
 
     @ActivityScope
     @Provides
-    static RecyclerView.Adapter provideArticleAdapter(List<GetArticleData> list) {
+    static ArticleAdapter provideArticleAdapter(List<GetArticleData.DatasBean> list) {
         return new ArticleAdapter(list);
     }
 

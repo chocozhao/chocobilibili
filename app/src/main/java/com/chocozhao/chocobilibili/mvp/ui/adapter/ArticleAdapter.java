@@ -1,19 +1,15 @@
 package com.chocozhao.chocobilibili.mvp.ui.adapter;
 
 
-import android.support.annotation.NonNull;
-import android.view.View;
-import android.widget.TextView;
-
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.chocozhao.chocobilibili.R;
 import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
-import com.chocozhao.chocobilibili.mvp.ui.holder.ArticleItemHolder;
-import com.jess.arms.base.BaseHolder;
-import com.jess.arms.base.DefaultAdapter;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * ClaseName：ArticleAdapter
@@ -26,22 +22,22 @@ import butterknife.BindView;
  * FixDescription：
  **/
 
-public class ArticleAdapter extends DefaultAdapter<GetArticleData> {
+public class ArticleAdapter extends BaseQuickAdapter<GetArticleData.DatasBean, BaseViewHolder> {
 
-
-
-    public ArticleAdapter(List<GetArticleData> infos) {
-        super(infos);
+    /**
+     * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
+     * 如果后期设置数据，不需要传入初始List，直接调用 super(layoutResId); 即可
+     */
+    public ArticleAdapter(@Nullable List<GetArticleData.DatasBean> data) {
+        super(R.layout.article_list, data);
     }
 
-    @NonNull
+    /**
+     * 在此方法中设置item数据
+     */
     @Override
-    public BaseHolder<GetArticleData> getHolder(@NonNull View v, int viewType) {
-        return new ArticleItemHolder(v);
+    protected void convert(@NotNull BaseViewHolder baseViewHolder, GetArticleData.@Nullable DatasBean datasBean) {
+        baseViewHolder.setText(R.id.article_tv, datasBean.getTitle());
     }
 
-    @Override
-    public int getLayoutId(int viewType) {
-        return R.layout.article_list;
-    }
 }

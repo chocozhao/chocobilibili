@@ -50,6 +50,6 @@ public interface UserService {
     Observable<BaseResponse<List<GetBannerData>>> getBanner();
 
     @GET("article/list/{num}/json")
-    Observable<BaseResponse<List<GetArticleData>>> getArticle(@Path("num") int lastIdQueried);
+    Observable<BaseResponse<GetArticleData>> getArticle(@Path("num") int num);
 
 }

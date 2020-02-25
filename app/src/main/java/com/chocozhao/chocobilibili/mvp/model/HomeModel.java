@@ -5,7 +5,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 
 import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
-import com.chocozhao.chocobilibili.mvp.model.api.cache.CommonCache;
 import com.chocozhao.chocobilibili.mvp.model.api.service.UserService;
 import com.chocozhao.chocobilibili.mvp.model.entity.BaseResponse;
 import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
@@ -20,9 +19,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
-import io.rx_cache2.DynamicKey;
 import timber.log.Timber;
 
 
@@ -62,10 +58,10 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
 
     //获取文章列表
     @Override
-    public Observable<BaseResponse<List<GetArticleData>>> getArticle(int lastIdQueried, boolean update) {
+    public Observable<BaseResponse<GetArticleData>> getArticle(int num, boolean update) {
         return mRepositoryManager
-                .obtainCacheService(UserService.class)
-                .getArticle(lastIdQueried);
+                .obtainRetrofitService(UserService.class)
+                .getArticle(num);
 
     }
 

@@ -90,6 +90,8 @@ dependencies {
     implementation'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     //轮播图
     implementation 'com.github.xiaohaibin:XBanner:1.7.0'
+    //第三方adapter BaseRecyclerViewAdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]

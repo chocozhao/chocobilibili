@@ -33,6 +33,7 @@ public interface HomeContract {
         void setBanner(List<GetBannerData> data);
         void startLoadMore();
         void endLoadMore();
+//        Fragment getFragment();
         Activity getActivity();
         //申请权限
         RxPermissions getRxPermissions();
@@ -41,6 +42,6 @@ public interface HomeContract {
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<BaseResponse<List<GetBannerData>>> getBanner();
-        Observable<BaseResponse<List<GetArticleData>>> getArticle(int lastIdQueried, boolean update);
+        Observable<BaseResponse<GetArticleData>> getArticle(int num, boolean update);
     }
 }
