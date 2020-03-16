@@ -1,8 +1,6 @@
 package com.chocozhao.chocobilibili.mvp.model.entity;
 
 
-import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
-
 /**
  * ClaseName：GetBannerData
  * Description：
@@ -14,7 +12,7 @@ import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
  * FixDescription：
  **/
 
-public class GetBannerData extends SimpleBannerInfo {
+public class GetBannerData {
     /**
      * desc : Android高级进阶直播课免费学习
      * id : 23
@@ -99,8 +97,4 @@ public class GetBannerData extends SimpleBannerInfo {
         this.url = url;
     }
 
-    @Override
-    public String  getXBannerUrl() {
-        return getImagePath();
-    }
 }

@@ -1,14 +1,15 @@
 package com.chocozhao.chocobilibili.di.module;
 
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chocozhao.chocobilibili.mvp.contract.HomeContract;
 import com.chocozhao.chocobilibili.mvp.model.HomeModel;
 import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
 import com.chocozhao.chocobilibili.mvp.model.entity.GetBannerData;
 import com.chocozhao.chocobilibili.mvp.ui.adapter.ArticleAdapter;
+import com.chocozhao.chocobilibili.mvp.ui.adapter.BannerHolderView.BannerNetWorkImageHolderView;
 import com.jess.arms.di.scope.ActivityScope;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -48,7 +49,8 @@ public abstract class HomeModule {
     @ActivityScope
     @Provides
     static RxPermissions provideRxPermissions(HomeContract.View view) {
-        return new RxPermissions((FragmentActivity) view.getActivity());
+//        return new RxPermissions((FragmentActivity) view.getActivity());
+        return new RxPermissions(view.getFragment());
     }
 
     @ActivityScope
@@ -69,4 +71,14 @@ public abstract class HomeModule {
         return new ArticleAdapter(list);
     }
 
+    @ActivityScope
+    @Provides
+    static View provideView(HomeContract.View view) {
+        return new View(view.getActivity());
+    }
+    @ActivityScope
+    @Provides
+    static BannerNetWorkImageHolderView provideBannerNetWorkImageHolderView(View view) {
+        return new BannerNetWorkImageHolderView(view);
+    }
 }

@@ -13,6 +13,7 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.LogUtils;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
 
@@ -25,7 +26,6 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import timber.log.Timber;
 
 
 /**
@@ -69,39 +69,23 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     //Fragment使用ON_START   Avtivity使用ON_CREATE
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onCreate() {
-        requestBannerData();//打开 App 时自动加载列表
-//        requestArticle(true, num);
+        //打开 App 时自动加载列表
         requestFromModel(true, num);
     }
 
-    public void requestBannerData() {
-        mModel.getBanner()
-                .subscribeOn(Schedulers.io())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<GetBannerData>>>(mErrorHandler) {
-                    @Override
-                    public void onNext(BaseResponse<List<GetBannerData>> listBaseResponse) {
-                        if (listBaseResponse.isSuccess()) {
-                            Timber.d("P:mDataList=" + listBaseResponse);
-                            mBannerData.addAll(listBaseResponse.getData());
-                            mRootView.setBanner(listBaseResponse.getData());
-                        } else {
-                            mRootView.showMessage(listBaseResponse.getErrorMsg());
-                        }
-                    }
-                });
-
-    }
 
 
-    public void requestArticle(final boolean pullToRefresh, int num) {
-//        requestFromModel(pullToRefresh,num);
+    public void requestFromModel (final boolean pullToRefresh, int num) {
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(new PermissionUtil.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
-                requestFromModel(pullToRefresh, num);
+                //轮播图数据
+                requestBannerData();
+                //列表数据
+                requestArticle(pullToRefresh, num);
+
             }
 
             @Override
@@ -118,8 +102,27 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         }, mRootView.getRxPermissions(), mErrorHandler);
     }
 
+    public void requestBannerData() {
+        mModel.getBanner()
+                .subscribeOn(Schedulers.io())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<GetBannerData>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<GetBannerData>> listBaseResponse) {
+                        if (listBaseResponse.isSuccess()) {
+                            LogUtils.debugInfo("P banner:"+listBaseResponse);
+                            mBannerData.addAll(listBaseResponse.getData());
+//                            mRootView.setBanner(listBaseResponse.getData());
+                        } else {
+                            mRootView.showMessage(listBaseResponse.getErrorMsg());
+                        }
+                    }
+                });
+
+    }
+
     //请求M层数据并做逻辑处理
-    private void requestFromModel(boolean pullToRefresh, int num) {
+    public void requestArticle(boolean pullToRefresh, int num) {
         if (pullToRefresh) {
             num = 1;//下拉刷新默认只请求第一页
         }

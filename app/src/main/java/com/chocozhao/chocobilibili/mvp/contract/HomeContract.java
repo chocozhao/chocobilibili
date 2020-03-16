@@ -1,6 +1,7 @@
 package com.chocozhao.chocobilibili.mvp.contract;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 
 import com.chocozhao.chocobilibili.mvp.model.entity.BaseResponse;
 import com.chocozhao.chocobilibili.mvp.model.entity.GetArticleData;
@@ -30,10 +31,10 @@ public interface HomeContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
 
-        void setBanner(List<GetBannerData> data);
+        void setUpBanner();
         void startLoadMore();
         void endLoadMore();
-//        Fragment getFragment();
+        Fragment getFragment();
         Activity getActivity();
         //申请权限
         RxPermissions getRxPermissions();

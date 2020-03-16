@@ -97,7 +97,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), fragmentList));
 //        mViewPager.setCurrentItem(0);
         mViewPager.setOffscreenPageLimit(mTitles.length);
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

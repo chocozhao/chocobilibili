@@ -89,9 +89,13 @@ dependencies {
     //BottomNavigationBar
     implementation'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     //轮播图
-    implementation 'com.github.xiaohaibin:XBanner:1.7.0'
+    implementation 'com.bigkoo:ConvenientBanner:2.1.4'
+//    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
     //第三方adapter BaseRecyclerViewAdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    //多次点击触发
+    implementation 'org.aspectj:aspectjrt:1.9.2'
+
     //test
     testImplementation rootProject.ext.dependencies["junit"]
     debugImplementation rootProject.ext.dependencies["canary-debug"]

@@ -3,26 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.stx.xhb.xbanner.XBanner
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/xbanner"
+    <com.bigkoo.convenientbanner.ConvenientBanner
+        android:id="@+id/convenientBanner"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:AutoPlayTime="3000"
-        app:pointsContainerBackground="#44aaaaaa"
-        app:pointsPosition="RIGHT"
-        app:tipTextSize="12sp"
-        app:isShowNumberIndicator="true"
-        app:isShowIndicatorOnlyOne="true"
-        app:pageChangeDuration="800"
-        />
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        app:canLoop="true"
+    />
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="4dp"
         android:paddingTop="4dp"
         >
@@ -30,7 +29,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
             tools:listitem="@layout/article_list"
             />
