@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -87,7 +90,7 @@ dependencies {
 //    implementation project(':arms-imageloader-glide')
 
     //BottomNavigationBar
-    implementation'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     //轮播图
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 //    implementation 'androidx.recyclerview:recyclerview:1.0.0+'
@@ -103,4 +106,6 @@ dependencies {
     testImplementation rootProject.ext.dependencies["canary-release"]
 
 
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

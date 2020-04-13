@@ -105,6 +105,8 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     public void requestBannerData() {
         mModel.getBanner()
                 .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<List<GetBannerData>>>(mErrorHandler) {
                     @Override
